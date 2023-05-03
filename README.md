@@ -16,49 +16,48 @@ Discover and explore the beauty of national parks with **npsExplorer**. Learn ab
 
 ## National Park Service API
 [API documentation](https://www.nps.gov/subjects/developer/api-documentation.htm)
-![Example](./readMedia/NPS-API-example.png)
+![Example](https://raw.githubusercontent.com/Powwow84/npsExplorer-client/main/readMedia/NPS-API-example.png)
 
 ## Entity Relational Diagram
-![User schema](./readMedia/User-collection-schema.png)
+![User schema](https://raw.githubusercontent.com/Powwow84/npsExplorer-client/main/readMedia/User-collection-schema.png)
 
 ## RESTful Routing Chart
-![Routing chart](./readMedia/app-routes.png)
+![Routing chart](https://raw.githubusercontent.com/Powwow84/npsExplorer-client/main/readMedia/app-routes.png)
 
 ## Wireframes
 Signup
-![Signup](./readMedia/Wireframe-sign-up.png)
+![Signup](https://raw.githubusercontent.com/Powwow84/npsExplorer-client/main/readMedia/Wireframe-sign-up.png)
 
 
 Login
-![Login](./readMedia/Wireframe-login.png)
-
+![Login](https://raw.githubusercontent.com/Powwow84/npsExplorer-client/main/readMedia/Wireframe-login.png)
 
 Home
-![Home](./readMedia/Wireframe-home.png)
+![Home](https://raw.githubusercontent.com/Powwow84/npsExplorer-client/main/readMedia/Wireframe-home.png)
 
 
 Search
-![Search](./readMedia/Wireframe-search.png)
+![Search](https://raw.githubusercontent.com/Powwow84/npsExplorer-client/main/readMedia/Wireframe-search.png)
 
 
 Park details
-![Park details](./readMedia/Wireframe-park-details.png)
+![Park details](https://raw.githubusercontent.com/Powwow84/npsExplorer-client/main/readMedia/Wireframe-park-details.png)
 
 
 Destinations
-![Destinations](./readMedia/Wireframe-destinations.png)
+![Destinations](https://raw.githubusercontent.com/Powwow84/npsExplorer-client/main/readMedia/Wireframe-destinations.png)
 
 
 User profile
-![User profile](./readMedia/Wireframe-user-profile.png)
+![User profile](https://raw.githubusercontent.com/Powwow84/npsExplorer-client/main/readMedia/Wireframe-user-profile.png)
 
 
 User experiences
-![User experiences](./readMedia/Wireframe-view-experience.png)
+![User experiences](https://raw.githubusercontent.com/Powwow84/npsExplorer-client/main/readMedia/Wireframe-view-experience.png)
 
 
 Edit experience
-![Edit experience](./readMedia/Wireframe-edit-experience.png)
+![Edit experience](https://raw.githubusercontent.com/Powwow84/npsExplorer-client/main/readMedia/Wireframe-edit-experience.png)
 
 ## User Stories
 ### MVP
