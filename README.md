@@ -2,6 +2,8 @@
 
 Discover and explore the beauty of national parks with **npsExplorer**. Learn about park details, activities, history, and view stunning images as you create your personalized destination itinerary of parks across the country!
 
+Working in a small team, we are challenged to develop a beautiful, mobile-first app that uses a NoSQL back end and React front end.
+
 ![Zion National Park](https://www.nps.gov/common/uploads/structured_data/68BFC1AC-BF96-629F-89D261D78F181C64.jpg)
 *Image of Zion National Park sourced from National Park Service API*
 
