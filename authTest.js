@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken")
+const db = require("./models")
 
 const jwtTest = () => {
     try {
@@ -7,13 +8,11 @@ const jwtTest = () => {
             // logging in to the app
         
         // create a payload of user data
-        const payload = {
-            name: "Weston",
-            id: "2345;lkfg90aw35r2qfas",
-            email: "w@b",
-            isAdmin: false 
-            // DO NOT PUT THE USER's PASSWORD
-        }
+        
+        const payload = db.User.findOne({
+            _id: "6452da04ac8aaa4b62dcc789"
+        })
+
         // we need to have a secret to sign the jwt with
         const secret = "I ate candy for breakfast"
         const token = jwt.sign(payload, secret)

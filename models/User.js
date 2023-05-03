@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
 	},
 	image: {
 		type: String,
-		default: ""
+		default: "https://github.com/andrewbantly/npsExplorer-server/blob/serverDev/media/default-avatar.png?raw=true"
 	},
 	favorites: [{
 		type: String

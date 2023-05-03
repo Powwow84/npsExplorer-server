@@ -16,11 +16,12 @@ app.use(express.json())
 
 // GET / -- test index route
 app.get('/', (req, res) => {
-    res.json({ msg: 'hello backend 🤖' })
+    res.json({ msg: 'Welcome to npsExplorer' })
 })
 
 // controllers
 app.use('/api-v1/users', require('./controllers/api-v1/users.js'))
+app.use('/api-v1/experiences', require('./controllers/api-v1/experiences.js'))
 
 // hey listen
 app.listen(PORT, () => {
