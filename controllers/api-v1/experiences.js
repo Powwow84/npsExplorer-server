@@ -18,6 +18,7 @@ router.get('/:userName', authLockedRoute, async (req, res) => {
         })
     } catch (error) {
         console.log(error)
+        res.status(500).json({ message: "internal Server Error" })
     }
 
 })
@@ -39,6 +40,7 @@ router.post('/:userName/:park', authLockedRoute, async (req, res) => {
         })
     } catch (error) {
         console.log(error)
+        res.status(500).json({ message: "internal Server Error" })
     }
 })
 
@@ -51,16 +53,26 @@ router.put("/:userName/:park", authLockedRoute, async (req, res) => {
             description: req.body.park.description,
             image: req.body.park.image
         }, { new: true })
-        await updatedExperience.save()
         res.json({
             msg: updatedExperience
         })
     } catch (error) {
         console.log(error)
+        res.status(500).json({ message: "internal Server Error" })
     }
 })
 
 
 // DELETE ROUTE FOR EXPERIENCES
+router.delete("/:userName/:park", authLockedRoute, async (req, res) => {
+    try {
+        await db.Experience.findByIdAndDelete(req.body.park._id)
+        res.sendStatus(204)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: "internal Server Error" })
+    }
+})
+
 
 module.exports = router
