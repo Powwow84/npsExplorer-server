@@ -11,11 +11,17 @@ router.get('/', (req, res) => {
 })
 
 // GET - See all experiences of a single, authorized user
-router.get('/:userName', authLockedRoute, async (req, res) => {
-    try {
-        res.json({
-            msg: res.locals.user.experiences
+router.get('/:userId', authLockedRoute, async (req, res) => {
+        // res.json({
+        //     msg: res.locals.user.experiences
+        // })
+        const  { userId } = req.params;
+        try {
+          const foundExperience = await db.Experience.find({
+            explorer: userId
         })
+           res.json(foundExperience)
+
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: "internal Server Error" })
@@ -72,17 +78,6 @@ router.delete("/:userName/:park", authLockedRoute, async (req, res) => {
         console.log(error)
         res.status(500).json({ message: "internal Server Error" })
     }
-})
-
-// GET see details of a specific experiences
-router.get("/:userName/:park", authLockedRoute, async (req, res) => {
-     try {
-       const foundExperience = await db.Experience.findById(req.body.park)
-        res.json(foundExperience)
-     } catch (error) {
-        console.log(error)
-        res.status(500).json({ message: "internal Server Error" })
-     }
 })
 
 
