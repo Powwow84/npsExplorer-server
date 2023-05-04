@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema({
 	favorites: [{
 		type: String
 	}],
-	Experiences: [{
+	experiences: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Experience"
 	}]
