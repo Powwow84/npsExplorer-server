@@ -74,5 +74,16 @@ router.delete("/:userName/:park", authLockedRoute, async (req, res) => {
     }
 })
 
+// GET see details of a specific experiences
+router.get("/:userName/:park", authLockedRoute, async (req, res) => {
+     try {
+       const foundExperience = await db.Experience.findById(req.body.park)
+        res.json(foundExperience)
+     } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: "internal Server Error" })
+     }
+})
+
 
 module.exports = router
