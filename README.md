@@ -8,7 +8,7 @@ Working in a small team, we are challenged to develop a beautiful, mobile-first 
 *Image of Zion National Park sourced from National Park Service API*
 
 ## Tech Stack
-* Javascript 
+* JavaScript 
 * React
 * Mongoose
 * MongoDB
