@@ -34,7 +34,7 @@ router.post('/register', async (req, res) => {
 			email: req.body.email,
 			password: hashedPassword
 		})
-
+		
 		await newUser.save()
 
 		// create jwt payload
