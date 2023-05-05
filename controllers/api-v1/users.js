@@ -172,6 +172,33 @@ router.delete('/destinations/:id',authLockedRoute, async (req, res) => {
 });
 
 
+// PUT update a favorite destination
+router.put('/destinations/:id', authLockedRoute, async (req, res) => {
+  try {
+    const user = await db.User.findById(res.locals.user._id);
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    const destinationId = req.params.id;
+    const destinationIndex = user.favorites.indexOf(destinationId);
+
+    if (destinationIndex === -1) {
+      return res.status(404).json({ msg: 'Destination not found in favorites' });
+    }
+
+    // Update the destination
+    user.favorites[destinationIndex] = req.body.updatedDestination;
+    await user.save();
+
+    res.json({ msg: 'Destination updated successfully' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+
 // need to ping the api to get the parks id and then add it to the faviorits array
 
 module.exports = router
