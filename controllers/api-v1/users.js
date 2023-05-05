@@ -102,4 +102,76 @@ router.get('/auth-locked', authLockedRoute, (req, res) => {
 	res.json({ msg: 'welcome to the private route!' })
 })
 
+
+
+
+//POST CREATE new destination
+router.post('/destinations',authLockedRoute, async (req, res) => {
+  try {
+    const parkId = req.body.parkId;
+
+    // check if destination already exists
+    const findDestinations = await db.User.findOne({
+      favorites: parkId
+    });
+
+    // don't allow favorites to get faved twice
+    if (findDestinations) {
+      return res.status(400).json({ msg: 'destination exists already' });
+    }
+
+    // Add parkId to the user's favorites array
+    const user = await db.User.findById(res.locals.user._id);
+    user.favorites.push(parkId);
+    await user.save();
+
+    res.json({ msg: 'destination added to favorites' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: 'server error' });
+  }
+});
+
+
+// GET res.locals.user.destinations
+router.get('/destinations',authLockedRoute, async (req, res) => {
+  try {
+    const user = await db.User.findById(res.locals.user._id);
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    res.json(res.locals.user.favorites);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: 'server error' });
+  }
+});
+
+// DELETE 
+router.delete('/destinations/:id',authLockedRoute, async (req, res) => {
+	try {
+		const user = await db.User.findById(res.locals.user._id);
+		if (!user) {
+			return res.status(404).json({ msg: 'User not found' });
+		}
+
+		const destinationIndex = user.favorites.indexOf(req.params.id);
+		if (destinationIndex === -1) {
+			return res.status(404).json({ msg: 'Destination not found in favorites' });
+		}
+
+		user.favorites.splice(destinationIndex, 1);
+		await user.save();
+
+		res.sendStatus(204)
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ msg: 'server error' });
+	}
+});
+
+
+// need to ping the api to get the parks id and then add it to the faviorits array
+
 module.exports = router
