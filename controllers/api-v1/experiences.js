@@ -4,23 +4,20 @@ const authLockedRoute = require('./authLockedRoute');
 
 // GET /experiences 
 router.get('/', (req, res) => {
-        res.json({
-            msg: "Welcome to the experiences endpoint"
-        })
+    res.json({
+        msg: "Welcome to the experiences endpoint"
+    })
 
 })
 
 // GET - See all experiences of a single, authorized user
 router.get('/:userId', authLockedRoute, async (req, res) => {
-        // res.json({
-        //     msg: res.locals.user.experiences
-        // })
-        const  { userId } = req.params;
-        try {
-          const foundExperience = await db.Experience.find({
+    const { userId } = req.params;
+    try {
+        const foundExperience = await db.Experience.find({
             explorer: userId
         })
-           res.json(foundExperience)
+        res.json(foundExperience)
 
     } catch (error) {
         console.log(error)
@@ -28,6 +25,22 @@ router.get('/:userId', authLockedRoute, async (req, res) => {
     }
 
 })
+
+// GET - Get information for a single experience 
+router.get("/experience/:experienceId", authLockedRoute, async (req, res) => {
+    const { experienceId } = req.params;
+    try {
+            const foundExperience = await db.Experience.find({
+                    _id: experienceId
+        })
+        res.json(foundExperience)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: "internal Server Error" })
+    }
+})
+
+
 // POST - Create new experience of a single, authorized user
 router.post('/:userName/:park', authLockedRoute, async (req, res) => {
     try {
@@ -51,13 +64,14 @@ router.post('/:userName/:park', authLockedRoute, async (req, res) => {
 })
 
 // PUT - update single experience for authorized user
-router.put("/:userName/:park", authLockedRoute, async (req, res) => {
+router.put("/:experienceId", authLockedRoute, async (req, res) => {
+    const { experienceId } = req.params;
     try {
         const updatedExperience = await db.Experience.findByIdAndUpdate({
-            _id: req.body.park._id
+            _id: experienceId
         }, {
-            description: req.body.park.description,
-            image: req.body.park.image
+            description: req.body.description,
+            image: req.body.image
         }, { new: true })
         res.json({
             msg: updatedExperience
