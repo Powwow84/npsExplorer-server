@@ -84,9 +84,10 @@ router.put("/:experienceId", authLockedRoute, async (req, res) => {
 
 
 // DELETE ROUTE FOR EXPERIENCES
-router.delete("/:userName/:park", authLockedRoute, async (req, res) => {
+router.delete("/:experienceId", authLockedRoute, async (req, res) => {
+    const { experienceId } = req.params;
     try {
-        await db.Experience.findByIdAndDelete(req.body.park._id)
+        await db.Experience.findByIdAndDelete(experienceId)
         res.sendStatus(204)
     } catch (error) {
         console.log(error)
