@@ -42,7 +42,7 @@ router.get("/experience/:experienceId", authLockedRoute, async (req, res) => {
 
 
 // POST - Create new experience of a single, authorized user
-router.post('/:userName/:park', authLockedRoute, async (req, res) => {
+router.post('/:userId', authLockedRoute, async (req, res) => {
     try {
         const createExperience = new db.Experience({
             location: req.body.park.location,
