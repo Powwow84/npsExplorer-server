@@ -34,7 +34,7 @@ router.post('/register', async (req, res) => {
 			email: req.body.email,
 			password: hashedPassword
 		})
-		
+
 		await newUser.save()
 
 		// create jwt payload
@@ -99,57 +99,75 @@ router.post('/login', async (req, res) => {
 router.get('/auth-locked', authLockedRoute, (req, res) => {
 	// use res.locals.user here to do authorization stuff
 	console.log('logged in user:', res.locals.user)
-	res.json({ msg: 'welcome to the private route!' })
+	// res.json({ msg: 'welcome to the private route!' })
+	res.json({ msg: res.locals.user.image})
+})
+
+
+// PUT - update user profile image
+router.put('/auth-locked', authLockedRoute, async (req, res) => {
+	console.log('logged in user:', res.locals.user._id)
+	newImageURL = req.body.image
+	try {
+		await db.User.findByIdAndUpdate({
+			_id: res.locals.user._id
+		}, {
+			image: newImageURL
+		})
+		res.json({msg: "user image updated"})
+	} catch (error) {
+		console.log(error)
+		res.status(500).json({ msg: 'server error' })
+	}
 })
 
 
 
-
 //POST CREATE new destination
-router.post('/destinations',authLockedRoute, async (req, res) => {
-  try {
-    const parkId = req.body.parkId;
+router.post('/destinations', authLockedRoute, async (req, res) => {
+	try {
+		const parkId = req.body.parkId;
 
-    // check if destination already exists
-    const findDestinations = await db.User.findOne({
-      favorites: parkId
-    });
+		// check if destination already exists
+		const findDestinations = await db.User.findOne({
+			favorites: parkId
+		});
 
-    // don't allow favorites to get faved twice
-    if (findDestinations) {
-      return res.status(400).json({ msg: 'destination exists already' });
-    }
+		// don't allow favorites to get faved twice
+		if (findDestinations) {
+			return res.status(400).json({ msg: 'destination exists already' });
+		}
 
-    // Add parkId to the user's favorites array
-    const user = await db.User.findById(res.locals.user._id);
-    user.favorites.push(parkId);
-    await user.save();
+		// Add parkId to the user's favorites array
+		const user = await db.User.findById(res.locals.user._id);
+		user.favorites.push(parkId);
+		await user.save();
 
-    res.json({ msg: 'destination added to favorites' });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ msg: 'server error' });
-  }
+		res.json({ msg: 'destination added to favorites' });
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ msg: 'server error' });
+	}
 });
 
 
 // GET res.locals.user.destinations
-router.get('/destinations',authLockedRoute, async (req, res) => {
-  try {
-    const user = await db.User.findById(res.locals.user._id);
-    if (!user) {
-      return res.status(404).json({ msg: 'User not found' });
-    }
+router.get('/destinations', authLockedRoute, async (req, res) => {
+	try {
+		const user = await db.User.findById(res.locals.user._id);
+		if (!user) {
+			return res.status(404).json({ msg: 'User not found' });
+		}
 
-    res.json(res.locals.user.favorites);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ msg: 'server error' });
-  }
+		res.json(res.locals.user.favorites);
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ msg: 'server error' });
+	}
 });
 
 // DELETE 
-router.delete('/destinations/:id',authLockedRoute, async (req, res) => {
+router.delete('/destinations/:id', authLockedRoute, async (req, res) => {
 	try {
 		const user = await db.User.findById(res.locals.user._id);
 		if (!user) {
@@ -174,28 +192,28 @@ router.delete('/destinations/:id',authLockedRoute, async (req, res) => {
 
 // PUT update a favorite destination
 router.put('/destinations/:id', authLockedRoute, async (req, res) => {
-  try {
-    const user = await db.User.findById(res.locals.user._id);
-    if (!user) {
-      return res.status(404).json({ msg: 'User not found' });
-    }
+	try {
+		const user = await db.User.findById(res.locals.user._id);
+		if (!user) {
+			return res.status(404).json({ msg: 'User not found' });
+		}
 
-    const destinationId = req.params.id;
-    const destinationIndex = user.favorites.indexOf(destinationId);
+		const destinationId = req.params.id;
+		const destinationIndex = user.favorites.indexOf(destinationId);
 
-    if (destinationIndex === -1) {
-      return res.status(404).json({ msg: 'Destination not found in favorites' });
-    }
+		if (destinationIndex === -1) {
+			return res.status(404).json({ msg: 'Destination not found in favorites' });
+		}
 
-    // Update the destination
-    user.favorites[destinationIndex] = req.body.updatedDestination;
-    await user.save();
+		// Update the destination
+		user.favorites[destinationIndex] = req.body.updatedDestination;
+		await user.save();
 
-    res.json({ msg: 'Destination updated successfully' });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ msg: 'Server error' });
-  }
+		res.json({ msg: 'Destination updated successfully' });
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ msg: 'Server error' });
+	}
 });
 
 
