@@ -2,12 +2,21 @@ const router = require('express').Router()
 const db = require('../../models')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const authLockedRoute = require('./authLockedRoute')
+const authLockedRoute = require('./authLockedRoute');
+const axios = require("axios");
 
 
 // GET /users - test endpoint
 router.get('/', (req, res) => {
 	res.json({ msg: 'welcome to the users endpoint' })
+})
+
+//GET /api - get api endpoint
+router.get("/nps", async (req, res) => {
+	const npsData = await axios.get(`https://developer.nps.gov/api/v1/parks?limit=469&api_key=${process.env.NPS_API_KEY}`)
+	// console.log(npsData.data)
+
+	res.json(npsData.data)
 })
 
 // POST /users/register - CREATE new user
