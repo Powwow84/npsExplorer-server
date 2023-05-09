@@ -6,7 +6,10 @@ require('dotenv').config()
 const dbName = 'npsexplorer'
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1/' + dbName
 
-mongoose.connect(MONGODB_URI)
+mongoose.connect(MONGODB_URI, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true
+})
 
 const db = mongoose.connection
 
